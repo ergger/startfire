@@ -60,14 +60,10 @@ public class StarFireServiceImpl implements IStarFireService {
 		Position kenobi= new Position(xKenobi,yKenobi);
 		Position skywalker= new Position(xSkywalker,ySkywalker);
 		Position solo= new Position(xSolo,ySolo);
-		System.out.println(kenobi+"-"+skywalker+"-"+solo);
-		System.out.println(satellites);
-		System.out.println(name1+":"+name2+":"+name3);
 		
 		Satellite kenoSat = filterByName(satellites, name1);
 		Satellite skywSat = filterByName(satellites, name2);
 		Satellite soloSat = filterByName(satellites, name3);
-		System.out.println(kenoSat);
 		List<Position> possibles = trilaterationPossible(kenobi, skywalker, kenoSat, skywSat);
 		return new Intelligence(trilaterationDefinitive(possibles, soloSat, solo), null);
 	}
@@ -92,24 +88,19 @@ public class StarFireServiceImpl implements IStarFireService {
 		
 		//Change Origin cartesian
 		Position another = new Position(other.getX()-origin.getX(),other.getY()-origin.getY());
-		System.out.println(another);
 		//Change orientation Cartesian
 		Float hipotenus = (float) Math.sqrt(Math.pow(another.getX(),2) + Math.pow(another.getY(), 2));
-		System.out.println(hipotenus);
 		//Find Emitter Signal
 		Float xEmitter = (float) ( Math.pow(hipotenus, 2) + Math.pow(originSat.getDistance(), 2) - Math.pow(otherSat.getDistance(),  2));
 		xEmitter = xEmitter / (2 * hipotenus);
-		System.out.println(xEmitter);
 		Float yEmitter = 0F;
 		if(originSat.getDistance() > xEmitter) {
 			yEmitter = (float) Math.sqrt(Math.pow(originSat.getDistance(),2) - Math.pow(xEmitter, 2));
 		}else {
 			yEmitter = (float) Math.sqrt(Math.pow(xEmitter,2) - Math.pow(originSat.getDistance(), 2));
 		}
-		System.out.println(yEmitter);
 		//Points find allow Cartesian modified get angle for return Cartesian Origin
 		Float angle = (float) Math.toDegrees(Math.asin(another.getY()/hipotenus));
-		System.out.println(angle);
 		//return to Cartessian angle
 		Position possible1 = new Position(
 				(float)(xEmitter * Math.cos(angle) + originSat.getDistance()*Math.cos(angle)),
@@ -117,15 +108,11 @@ public class StarFireServiceImpl implements IStarFireService {
 		Position possible2 = new Position(
 				(float)(xEmitter * Math.cos(angle) + originSat.getDistance()*Math.cos(angle)),
 				(float)((yEmitter*(-1)) * Math.sin(angle) + originSat.getDistance()*Math.sin(angle)));
-		System.out.println(possible1);
-		System.out.println(possible2);
 		//return to 0 Cartessian Origin
 		possible1.setX(possible1.getX()+origin.getX());
 		possible1.setY(possible1.getY()+origin.getY());
 		possible2.setX(possible2.getX()+origin.getX());
 		possible2.setY(possible2.getY()+origin.getY());
-		System.out.println(possible1);
-		System.out.println(possible2);
 		return new ArrayList<>(Arrays.asList(
 					possible1,
 					possible2
@@ -140,20 +127,13 @@ public class StarFireServiceImpl implements IStarFireService {
 	 */
 	private Position trilaterationDefinitive(List<Position> possibles, Satellite definiter, Position canon) {
 		for(Position p:possibles) {
-			System.out.println(p);
-			System.out.println(definiter.getDistance());
 			Float xtest = (float) p.getX() - canon.getX();
 			Float ytest = (float) p.getY() - canon.getY();
 			Float hipotenus = (float) Math.sqrt(Math.pow(xtest,2)+Math.pow(ytest, 2));
-			System.out.println(hipotenus);
-			System.out.println(Math.floor(hipotenus));
-			System.out.println(Math.floor(definiter.getDistance()));
 			if(Math.floor(hipotenus) == Math.floor(definiter.getDistance())) {
-				System.out.println("hallado!");
 				return p;
 			}
 		}
-		System.out.println("Paila");
 		return new Position();
 	}
 
@@ -175,7 +155,6 @@ public class StarFireServiceImpl implements IStarFireService {
 			flat.setLength(0);
 			message.append(" ");
 		}
-		System.out.println(message);
 		return message.toString();
 	}
 

@@ -23,7 +23,6 @@ public class StarFireControllerImpl implements IStarFireController {
 
 	@Override
 	public ResponseEntity<Intelligence> getIntelligence(SatelliteList satellites) {
-		System.out.println(satellites);
 		Intelligence response = iStartFireService.getIntelligence(satellites);
 		if(response.getPosition().getX() == null) {
 			return ResponseEntity.notFound().build();
@@ -33,8 +32,6 @@ public class StarFireControllerImpl implements IStarFireController {
 
 	@Override
 	public ResponseEntity<Intelligence> getSatellite(String name, SatelliteList satellites) {
-		System.out.println(name);
-		System.out.println(satellites);
 		Intelligence response = new Intelligence(new Position(),iStartFireService.getMessage(satellites));
 		return ResponseEntity.ok().body(response);
 	}
