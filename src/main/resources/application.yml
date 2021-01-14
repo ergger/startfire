@@ -1,0 +1,16 @@
+heidergger:
+  neutron:
+    startfire:
+      name1: kenobi
+      name2: skywalker
+      name3: solo
+      kenobi:
+        x: -500
+        y: -200
+      skywalker:
+        x: 100
+        y: -100
+      solo:
+        x: 500
+        y: 100
+      
